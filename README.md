@@ -22,13 +22,6 @@ You can download the dataset from Kaggle:
 
 [Download Airbnb Open Data Dataset](https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata)
 
-## Project Structure
-
-VOIS_AICTE_Oct2025_Rajat-Ojha/
-│
-├── Airbnb_Hotel_Booking_Analysis.ipynb
-└── README.md
-
 ## Author
 
 **Rajat Ojha**
