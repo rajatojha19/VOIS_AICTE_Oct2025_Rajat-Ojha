@@ -33,7 +33,7 @@ ORDER BY field19 DESC;
 
 --6. Average review rate number by neighbourhood group
 
-SELECT field6 AS neighbourhood_group, AVG(field22) AS avg_review_rate
+SELECT field6 AS neighbourhood_group, AVG(CAST(field22 AS REAL))
 FROM Airbnb_Open_Data
 WHERE field1 <> 'id'
 GROUP BY field6;
@@ -52,6 +52,27 @@ WHERE field1 <> 'id'
 ORDER BY field24 DESC
 LIMIT 10;
 
+--9. CTE - neighbourhood groups with above-average number of listings
+
+WITH group_counts AS (
+  SELECT field6 AS neighbourhood_group, COUNT(*) AS total_listings
+  FROM Airbnb_Open_Data
+  WHERE field1 <> 'id'
+  GROUP BY field6
+)
+SELECT neighbourhood_group, total_listings
+FROM group_counts
+WHERE total_listings > (SELECT AVG(total_listings) FROM group_counts);
+
+--10. Window function — rank listings by number of reviews within each neighbourhood group
+
+SELECT field2 AS name, field6 AS neighbourhood_group, field19 AS num_reviews,
+       RANK() OVER (
+         PARTITION BY field6
+         ORDER BY field19 DESC
+       ) AS review_rank
+FROM Airbnb_Open_Data
+WHERE field1 <> 'id';
 
 
 
